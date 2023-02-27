@@ -1,0 +1,26 @@
+<%= form_with(model: task, local: true ) do |form| %>
+  <% if task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(task.errors.count, "error") %> タスクの登録ができませんでした</h2>
+
+      <ul>
+        <% task.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :タスク名 %>
+    <div>
+    <%= form.text_field :task_name %>
+    </div>
+    <div>
+    <%= form.label :詳細 %>
+    </div>
+    <%= form.text_field :detail %>
+  </div>
+  <div class="actions">
+  <%= form.submit %>
+  </div>
+<% end %>
