@@ -6,9 +6,9 @@
 <table>
   <tbody>
     <% @tasks.each do |t| %>
-      <tr>
-        <td><div><%= t.task_name %></td>
-        <td><%= t.detail %></div></td>
+      <tr class = "task_row">
+        <td><div ><%= t.task_name %></td>
+        <td><%= t.detail %></td></div>
         <td><%= link_to "詳細を確認", task_path(t.id) %></td>
         <td><%= link_to "編集", edit_task_path(t.id) %></td>
         <td><%= link_to "削除", task_path(t.id), method: :delete, data: {confirm: "本当に削除しますか?"} %></td>
