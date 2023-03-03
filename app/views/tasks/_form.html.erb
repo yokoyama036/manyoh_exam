@@ -15,10 +15,14 @@
     <div>
     <%= form.text_field :task_name %>
     </div>
-    <div>
-    <%= form.label :詳細 %>
-    </div>
+    <div><%= form.label :詳細 %></div>
     <%= form.text_field :detail %>
+    <div><%= form.label :終了期限 %></div>
+    <%= form.text_field :deadline %>
+    <div><%= form.label :ステータス %></div>
+    <%= form.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], include_blank: "選択して下さい" %>
+    <div><%= form.label :優先度 %></div>
+    <%= form.select :priority, [["高", "高"], ["中", "中"], ["低", "低"]], include_blank: "選択して下さい" %>
   </div>
   <div class="actions">
   <%= form.submit %>
