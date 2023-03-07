@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task,only: %i[ show edit update destroy ]
 
   def index
-     @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(10)
+     @tasks = current_user.tasks.order(created_at: :desc).page(params[:page]).per(10)
      if params[:task].present?
       if params[:task][:name_search].present? && params[:task][:status].present?
         @tasks = Task.where('task_name LIKE ?', "%#{params[:task][:name_search]}%").where(status: params[:task][:status])
@@ -31,7 +31,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     if params[:back]
       render :new
     else

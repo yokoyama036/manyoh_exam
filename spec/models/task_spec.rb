@@ -27,7 +27,6 @@ RSpec.describe 'タスクモデル機能', type: :model do
     let!(:second_task) { FactoryBot.create(:second_task, task_name: "sample", status: '未着手') }
     context 'scopeメソッドでタイトルのあいまい検索をした場合' do
       it "検索キーワードを含むタスクが絞り込まれる" do
-        binding.irb
         expect(Task.search_task_name('task')).to include(task)
         expect(Task.search_task_name('task')).not_to include(second_task)
         expect(Task.search_task_name('task').count).to eq 1

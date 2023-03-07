@@ -1,4 +1,5 @@
 class Task < ApplicationRecord
+  belongs_to :user
   validates :task_name, :detail, presence: true
   enum priority: { 高: "a", 中: "b", 低: "c" }
   scope :search_task_name, -> (task_name){where('task_name LIKE ?', "%#{task_name}%")}
