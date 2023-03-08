@@ -5,5 +5,13 @@ FactoryBot.define do
   factory :task do
     task_name { 'テスト' }
     detail { 'Factory動作確認' }
+    deadline{'2023-03-03'}
+    status{'着手中'}
+  end
+  factory :second_task, class: Task do
+    task_name { 'テスト2' }
+    detail { 'Factory動作確認2' }
+    deadline{'2023-03-03'}
+    status{'着手中'}
   end
 end

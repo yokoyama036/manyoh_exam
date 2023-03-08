@@ -1,4 +1,19 @@
 <!DOCTYPE html>
+
+<style>
+
+header {
+  width: 100%;
+  height:30px;
+  position: sticky;
+  top: 0;
+  background-color: #eff3f3;
+  display: inline;
+  text-align: center;
+}
+
+</style>
+
 <html>
   <head>
     <title>ManyoExam</title>
@@ -6,11 +21,22 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %> 
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
+  <header class = "header">  
+  </header>
   <body>
+    <li class="list-unstyled">
+      <% if logged_in? %>
+        <%= link_to "Mypage", user_path(current_user.id) %>
+        <%= link_to "Logout", session_path(current_user.id), method: :delete %>
+        <%= link_to "Task_Index", tasks_path(current_user.id), user: @user %>
+      <% else %>
+        <%= link_to "Sign up", new_user_path %>
+        <%= link_to "Login", new_session_path %>
+      <% end %>
+    </li>
     <%= yield %>
   </body>
 </html>

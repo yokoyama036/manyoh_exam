@@ -1,20 +1,47 @@
 
-<h2>タスク一覧</h2>
+<h3>タスク一覧</h3>
 
 <h4><%= notice %></h4>
 
 <table>
+
+  <%= form_with(scope: :task,url: tasks_path,method: :get, local: true ) do |f| %>
+    <%= f.label :タスク名%>
+    <%= f.text_field :name_search,placeholder: "検索", class: "search-text"%>
+    <%= f.label :ステータス%>
+    <%= f.select :status, ["未着手", "着手中", "完了"], include_blank: "選択して下さい" %>
+    <%= f.submit "検索", class: "btn-info" %>  
+     
+  <% end %>
+
+ <h3><button type="button" class="btn btn-outline-primary"><%= link_to '新規登録', new_task_path %></button><h3>
+
+  <tr>
+    <th>タスク名</th>
+    <th>詳細内容</th>
+    <th>登録日時</th>
+    <th><%= link_to "終了期限", tasks_path(sort_deadline: "true") %></th>
+    <th>ステータス</th>
+    <th><%= link_to "優先順位", tasks_path(sort_priority: "true") %></th>
+    <th><%= link_to "登録者", tasks_path(sort_priority: "true") %></th>
+  </tr>
   <tbody>
     <% @tasks.each do |t| %>
       <tr class = "task_row">
         <td><div ><%= t.task_name %></td>
-        <td><%= t.detail %></td></div>
-        <td><%= link_to "詳細を確認", task_path(t.id) %></td>
-        <td><%= link_to "編集", edit_task_path(t.id) %></td>
-        <td><%= link_to "削除", task_path(t.id), method: :delete, data: {confirm: "本当に削除しますか?"} %></td>
+        <td><%= t.detail %></td>
+        <td><%= l t.created_at %></td>
+        <td><%= t.deadline %></td>
+        <td><%= t.status %></td>
+        <td><%= t.priority %></td></div>
+        <td><%= t.user.name %></td></div>
+        <td><div class ='btn btn-light'><%= link_to "詳細を確認", task_path(t.id) %></div></td>
+        <td><div class ='btn btn-light'><%= link_to "編集", edit_task_path(t.id) %></div></td>
+        <td><div class ='btn btn-light'><%= link_to "削除", task_path(t.id), method: :delete, data: {confirm: "本当に削除しますか?"} %></div></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<br>
+<%= paginate(@tasks) %>
 
-<h3><%= link_to 'タスクを追加する', new_task_path %><h3>
