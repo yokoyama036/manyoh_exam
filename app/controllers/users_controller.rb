@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     if current_user == User.find(params[:id])
       @user = User.find(params[:id])
     else
-      redirect_to(tasks_path, danger:"権限がありません")
+      redirect_to tasks_path, notice: "権限がありません"
     end
   end
 
