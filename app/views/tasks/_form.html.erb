@@ -25,6 +25,12 @@
     <%= form.select :priority, [["高", "高"], ["中", "中"], ["低", "低"]], include_blank: "選択して下さい" %>
   </div>
   <div class="actions">
-  <%= form.submit %>
+  <% i = 0 %>
+  <%=form.fields_for :labels do |f| %>
+    <h5>ラベル<%= i +=1 %></h5>
+    <div><%= f.label :label_name, "ラベル名" %></div>
+    <%= f.text_field :label_name %>
+  <% end %>
+ <div> <%= form.submit %></div>
   </div>
 <% end %>

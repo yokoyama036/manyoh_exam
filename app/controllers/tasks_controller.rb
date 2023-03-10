@@ -2,32 +2,31 @@ class TasksController < ApplicationController
   before_action :set_task,only: %i[ show edit update destroy ]
 
   def index
-     @tasks = current_user.tasks.order(created_at: :desc).page(params[:page]).per(10)
+     @tasks = current_user.tasks.order(created_at: :desc)
      if params[:task].present?
       if params[:task][:name_search].present? && params[:task][:status].present?
         @tasks = Task.where('task_name LIKE ?', "%#{params[:task][:name_search]}%").where(status: params[:task][:status])
         # @tasks = Task.where('task_name LIKE ? AND status = ?', "%#{params[:task][:name_search]}%,",params[:task][:status])
         #↑この書き方だとログ上は実行されたように見えるが中身は[]で検索対象なしとなる
-        @tasks = @tasks.page(params[:page]).per(10)
       elsif  params[:task][:name_search].present?
         @tasks = Task.where('task_name LIKE ?', "%#{params[:task][:name_search]}%")
-        @tasks = @tasks.page(params[:page]).per(10)
       elsif  params[:task][:status].present?
         @tasks = Task.where(status: params[:task][:status])
-        @tasks = @tasks.page(params[:page]).per(10)
+      elsif  params[:task][:label_search].present?
+        @tasks = Task.joins(:labels).where(labels: { label_name: params[:task][:label_search] })
       end
      end
     if params[:sort_deadline]
       @tasks = Task.all.order(deadline: :asc)
-      @tasks = @tasks.page(params[:page]).per(10)
     elsif params[:sort_priority]
       @tasks = Task.all.order(priority: :asc)
-      @tasks = @tasks.page(params[:page]).per(10)
     end
+    @tasks = @tasks.page(params[:page]).per(10)
   end
 
   def new
     @task = Task.new
+    @task.labels.build
   end
 
   def create
@@ -47,6 +46,7 @@ class TasksController < ApplicationController
   end
 
   def edit
+    @task.labels.build
   end
 
   def update
@@ -69,7 +69,8 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:task_name, :detail, :deadline, :status, :priority)
+    params.require(:task).permit(:task_name, :detail, :deadline, :status, :priority,
+    labels_attributes: [:label_name, :id])
   end
 
 end

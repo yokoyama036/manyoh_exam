@@ -10,6 +10,8 @@
     <%= f.text_field :name_search,placeholder: "検索", class: "search-text"%>
     <%= f.label :ステータス%>
     <%= f.select :status, ["未着手", "着手中", "完了"], include_blank: "選択して下さい" %>
+    <%= f.label :ラベル%>
+    <%= f.text_field :label_search, class: "search-label"%>
     <%= f.submit "検索", class: "btn-info" %>  
      
   <% end %>
@@ -24,17 +26,21 @@
     <th>ステータス</th>
     <th><%= link_to "優先順位", tasks_path(sort_priority: "true") %></th>
     <th><%= link_to "登録者", tasks_path(sort_priority: "true") %></th>
+    <th><%= link_to "ラベル" %></th>
   </tr>
   <tbody>
     <% @tasks.each do |t| %>
       <tr class = "task_row">
-        <td><div ><%= t.task_name %></td>
+        <td><%= t.task_name %></td>
         <td><%= t.detail %></td>
         <td><%= l t.created_at %></td>
         <td><%= t.deadline %></td>
         <td><%= t.status %></td>
         <td><%= t.priority %></td></div>
         <td><%= t.user.name %></td></div>
+        <% t.labels.each do |l| %>
+          <td><%= l.label_name %></td>
+        <% end %>
         <td><div class ='btn btn-light'><%= link_to "詳細を確認", task_path(t.id) %></div></td>
         <td><div class ='btn btn-light'><%= link_to "編集", edit_task_path(t.id) %></div></td>
         <td><div class ='btn btn-light'><%= link_to "削除", task_path(t.id), method: :delete, data: {confirm: "本当に削除しますか?"} %></div></td>
