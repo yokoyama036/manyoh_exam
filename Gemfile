@@ -21,7 +21,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'spring-commands-rspec'
-  gem 'faker'
   gem 'launchy'
   gem 'pry-rails'
 end
@@ -43,3 +42,4 @@ gem 'net-smtp'
 gem 'net-imap'
 gem 'net-pop'
 gem 'kaminari'
+gem 'faker'
