@@ -5,6 +5,13 @@
 
 <p>タスク名: <%= @task.task_name %></p>
 <p>タスク詳細: <%= @task.detail %></p>
+<% i = 0 %>
+<% @task.labels.each do |f| %>
+  <% if @task.labels.any? %>
+    <h5>ラベル<%= i +=1 %></h5>
+    <p>ラベル名:<%= f.label_name %></p>
+  <% end %>
+<% end %>
 
 <%= link_to '編集', edit_task_path %>
 <%= link_to '戻る', tasks_path %>
